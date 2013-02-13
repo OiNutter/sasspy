@@ -1,0 +1,6 @@
+*.sublime-*
+*.pyc
+build/*
+.DS_Store
+dist/
+tmp
