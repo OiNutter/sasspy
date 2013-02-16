@@ -85,6 +85,20 @@ class CSS(object):
 					color: blue
 
 		'''
-		
+		children = []
+		for child in root.children:
+			if not isinstance(child,tree.RuleNode) and not child.parsed_rules.members.size > 1:
+				if isinstance(child,tree.DirectiveNode):
+					child = self.expand_commas(child)
+				continue
 
+			members = []
+			for seq in child.parsed_rules.members:
+				node = tree.RuleNode([])
+				node.parsed_rules = self.make_cseq(seq)
+				node.children = child.children
+				node.append(members)
+			children.append(members)
 
+		root.children = utils.flatten(children)
+		return root
