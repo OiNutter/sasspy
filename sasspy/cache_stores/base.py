@@ -2,8 +2,8 @@ import abc
 import pickle
 from hashlib import sha1
 
-import utils
-import version
+from .. import utils
+from .. import version
 
 class Base(object):
 	''' An abstract base class for backends for the Sass cache.
@@ -25,8 +25,7 @@ class Base(object):
 
 			Note: cache contents contain binary data
 		'''
-
-		raise NotImplementedError('%s must implement _store'%self.__class__.__name__)
+		utils.abstract(self)
 
 	def _retrieve(self,key,version,sha):
 		''' Retrieved cached contents.
@@ -35,8 +34,7 @@ class Base(object):
 			Note: if the key exists but the sha or version have changed,
 			then the key may be deleted by the cache store, if it wants to do so.
 		'''
-
-		raise NotImplementedError('%s must implement _retrieve'%self.__class__.__name__)
+		utils.abstract(self)
 
 	def store(self,key,sha,object):
 		''' Store a sass.Tree.RootNode '''
